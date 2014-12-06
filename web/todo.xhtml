@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+    </h:head>
+    <h:body>
+
+        <hr/>
+        <h:form>
+            <!-- TODO: reset input field! -->
+            <h:inputText id="todo-input" converter="TodoItemConverter" 
+                         value="#{todoItem}" validatorMessage="Length > 0">
+                <f:validateLength minimum="1"/>
+            </h:inputText>
+
+
+            <h:commandButton value="+" action="#{todoList.addTodos(todoItem)}"/>
+            <h:message for="todo-input"/>
+        </h:form>
+        <h:form>
+            <h:dataTable value="#{todoList.todos}" var="todo">
+                <h:column>
+
+                    <h:outputText value="#{todo.title}"/>
+                </h:column>
+
+                <h:column>
+                    <h:commandButton value="-" action="#{todoList.remove(todo)}"/>
+                </h:column>
+                <h:column>
+                    <h:commandButton value="up" action="#{todoList.up(todo)}"
+                                     disabled="#{todoList.upDisabled(todo)}"/>
+                </h:column>
+                <h:column>
+                    <h:commandButton value="down" action="#{todoList.down(todo)}"
+                                     disabled="#{todoList.downDisabled(todo)}"/>
+                </h:column>
+
+            </h:dataTable>
+
+        </h:form>
+
+    </h:body>
+</html>
+
